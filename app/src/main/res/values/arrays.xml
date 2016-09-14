@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="colores_fragmentos_appbar">
+        <item>#2196F3</item><!--azul, el mismo que el color primario de nuestro tema-->
+        <item>#e6b121</item><!--dorado-->
+        <item>#556B2F</item><!--verde-->
+    </array>
+
+    <array name="colores_fragmentos_textos">
+        <item>#ffffff</item><!--blanco-->
+        <item>#2F4F4F</item><!--gris-->
+        <item>#FFFF00</item><!--amarillo-->
+    </array>
+</resources>
