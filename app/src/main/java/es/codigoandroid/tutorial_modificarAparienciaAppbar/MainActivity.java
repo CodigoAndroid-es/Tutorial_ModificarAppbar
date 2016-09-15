@@ -5,11 +5,11 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.ToolbarPrincipal);
         setSupportActionBar(toolbar);
 
+        // Declaramos e iniciamos la AppBar y el objeto ColorDrawable
         final AppBarLayout appbar = (AppBarLayout) findViewById(R.id.AppbarPrincipal);
         final ColorDrawable appBarBackground = new ColorDrawable();
 
@@ -48,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         TypedArray arrayColoresFragmentosAppbar = getResources().obtainTypedArray(R.array.colores_fragmentos_appbar);
         TypedArray arrayColoresFragmentosTextos = getResources().obtainTypedArray(R.array.colores_fragmentos_textos);
 
+        // Creamos los a
         final int[] coloresFragmentosAppbar = new int[arrayColoresFragmentosAppbar.length()];
         final int[] coloresFragmentosTextos = new int[arrayColoresFragmentosAppbar.length()];
+
         for (int i = 0; i < arrayColoresFragmentosAppbar.length(); i++) {
             coloresFragmentosAppbar[i] = arrayColoresFragmentosAppbar.getColor(i, 0);
             //usamos el mismo bucle porque sabemos que tenemos la misma cantidad
@@ -91,29 +94,32 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(ViewPager);
 
         ViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-
                 // IMPORTANTE: Comprobamos si estamos en la última pestaña para no incurrir en un ArrayIndexOutOfBoundsException
-                if (position >= Adaptador_ViewPagerPrincipal.getCount() - 1)  {
+                if (position >= Adaptador_ViewPagerPrincipal.getCount() - 1) {
                     return;
                 }
+
                 //recuperamos los colores correspondientes
                 int desdeColor = coloresFragmentosAppbar[position];
-                int haciaColor = coloresFragmentosAppbar[position+1];
+                int haciaColor = coloresFragmentosAppbar[position + 1];
 
                 int desdeColorTexto = coloresFragmentosTextos[position];
-                int haciaColorTexto = coloresFragmentosTextos[position+1];
+                int haciaColorTexto = coloresFragmentosTextos[position + 1];
 
-                //mezclamos los colores y actualizamos el color de fondo de la appBar y los textos de las Tabs
+
+                //mezclamos los colores y actualizamos el color de fondo de la appBar
                 final int mezclaFondo = mezclaColores(haciaColor, desdeColor, positionOffset);
-                final int mezclaTexto = mezclaColores(haciaColorTexto, desdeColorTexto, positionOffset);
+
 
                 appBarBackground.setColor(mezclaFondo);
-                tabLayout.setTabTextColors(mezclaTexto,mezclaTexto);
 
-                //tambien podemos crear el mismo efecto en el titulo y subtitulo
+                //tambien podemos crear el mismo efecto en el titulo y subtitulo y en la Tablayout
+                final int mezclaTexto = mezclaColores(haciaColorTexto, desdeColorTexto, positionOffset);
+
+                tabLayout.setTabTextColors(mezclaTexto, mezclaTexto);
                 titulo.setTextColor(mezclaTexto);
                 subtitulo.setTextColor(mezclaTexto);
 
@@ -134,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static int mezclaColores(int primerColor, int segundoColor, float ratio) {
+    public int mezclaColores(int primerColor, int segundoColor, float ratio) {
         final float ratioInverso = 1f - ratio;
         final float r = Color.red(primerColor) * ratio + Color.red(segundoColor) * ratioInverso;
         final float g = Color.green(primerColor) * ratio + Color.green(segundoColor) * ratioInverso;

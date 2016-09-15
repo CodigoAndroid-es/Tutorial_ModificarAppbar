@@ -1,7 +1,4 @@
 <resources>
-
-    <string name="app_name">Tutorial Customizar Pestañas</string>
+    <string name="app_name">Tutorial Modificar Appbar</string>
     <string name="toolbar_subtitulo">www.codigoandroid.es</string>
-
-
 </resources>
